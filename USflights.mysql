@@ -1,0 +1,43 @@
+/* USFligths Pablo Schvarzman*/
+
+/* Consulta 1*/
+SELECT count(flightID) AS Total 
+FROM Flights;
+
+/* Consulta 2*/
+SELECT Origin AS Origen, AVG(ArrDelay) AS prom_arribades, AVG(DepDelay) AS prom_sortides 
+FROM Flights 
+GROUP By Origin;
+
+/* Consulta 3*/
+SELECT Origin, colYear, colMonth, AVG(ArrDelay) AS prom_arribades 
+FROM Flights 
+GROUP BY Origin, colYear, colMonth;
+
+/* Consulta 4*/
+SELECT City, colYear, colMonth, AVG(ArrDelay) AS prom_arribades 
+FROM Flights 
+INNER JOIN USAirports ON USAirports.iata=Flights.origin
+GROUP BY City, colYear, colMonth
+
+/* Consulta 5*/
+SELECT UniqueCarrier, colYear, colMonth, AVG(ArrDelay), SUM(Cancelled) AS Total_Cancelled 
+FROM Flights 
+GROUP BY UniqueCarrier, colYear, colMonth
+HAVING SUM(Cancelled)
+ORDER BY SUM(Cancelled) DESC
+
+
+/* Consulta 6*/
+SELECT TailNum, SUM(Distance) 
+FROM Flights 
+WHERE tailnum IS NOT NULL
+GROUP BY TailNum 
+ORDER BY SUM(Distance) DESC
+LIMIT 10;
+
+/* Consulta 7*/
+SELECT UniqueCarrier, AVG(ArrDelay) 
+FROM Flights 
+GROUP BY UniqueCarrier HAVING AVG(ArrDelay) > 10
+ORDER BY AVG(ArrDelay) DESC;
